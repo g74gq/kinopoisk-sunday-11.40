@@ -1,0 +1,57 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}home{% endblock %}
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+
+{% block content %}
+<div class="container mt-5 ">
+    <div class="d-flex align-items-end gap-5">
+        <img class="photo" width="200" height="150" src="{{user.avatar.url}}" alt="">
+        <h1>{{user.username}}</h1>
+    </div>
+    <div class="my-2">
+        <h2 class="mt-5">любимые фильмы:</h2>
+        <div class="d-flex justify-content-star gap-2 my-3">
+        {% for movie in user.favorite_movies.all %}
+        <div style="max-height: 30vh;">
+            <a href="{% url 'movie_detail' movie_id=movie.id %}" class="text-decoration-none">
+            <img height="80%"src="{{movie.poster.url}}" alt="">
+            <h2>{{movie.title}}</h2>
+        </a>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+</div>
+
+<div>
+    <h5>имя: {{user.first_name}}</h5>
+    <h5>фамилия: {{user.last_name}}</h5>
+    <h5>почта:{{user.email}}</h5>
+
+</div>
+
+
+<div>
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              изменить профиль
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+        <form method="post" class="d-flex gap-2">
+            {% csrf_token %}
+            <input name="first_name" type="text" placeholder="введите новое имя">
+            <input name="last_name" type="text" placeholder="введите новую фамилию">
+            <input name="email" type="text" placeholder="введите новую почту">
+            <button type="submit" class="btn btn-outline-warning">подтвердить</button>
+        </form>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

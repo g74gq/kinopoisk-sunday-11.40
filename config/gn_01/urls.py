@@ -13,4 +13,5 @@ urlpatterns = [
     path('directors_detail/<int:directors_id>/', directors_detail, name='directors_detail'),
     path('generes_detail/<int:generes_id>/', generes_detail, name='generes_detail'),
     path('composers_detail/<int:composers_id>/', composers_detail, name='composters_detail'),
+    path('add_movie_review/', add_movie_review, name='add_movie_review')
 ]

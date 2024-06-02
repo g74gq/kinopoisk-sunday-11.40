@@ -1,13 +1,12 @@
 from django.contrib import admin
 from gn_01.models import *
 
-# Register your models here.
+# # Register your models here.
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     list_display = (
         'title',
         'rating',
-        'releas_date',
         'budget',
     )
 

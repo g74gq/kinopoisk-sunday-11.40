@@ -1,0 +1,84 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}home{% endblock %}
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+{% block content %}
+<div class="container">
+    <section class="mt-5">
+        <div class="d-flex justify-content-between gap-5">
+            <div class="">
+                <img src="{{movie.poster.url}}" alt="">
+                <div class="">
+                    <p>рейтинг: {{movie.rating}}</p>
+                </div>
+            </div>
+            <div class="w-75">
+                <h1>{{movie.title}}</h1>
+                <p>{{movie.description}}</p>
+                <div class="movie__info-grid">
+                    <div class="info-grid__features">
+                        <div class="info-grid__item">
+                            <h5 class="info-grid__title">жанры:</h5>
+                            {% for genre in movie.genres.all %}
+                            <a href='' class="info-grid__value">{{genre.name}}{% if not forloop.last%},{% endif %}</a>
+                            {% endfor %}
+                        </div>
+                        <div class="info-grid__item">
+                            <h5 class="info-grid__title">длительность:</h5>
+                            <a href='' class="info-grid__value">{{movie.duration}} мин</a>
+                        </div>
+                        <div class="info-grid__item">
+                            <h5 class="info-grid__title">бюджет:</h5>
+                            <a href='' class="info-grid__value">{{movie.budget}}</a>
+                        </div>
+                        <div class="info-grid__item">
+                            <h5 class="info-grid__title">дата выхода:</h5>
+                            <a href='' class="info-grid__value">{{movie.release_date}}</a>
+                        </div>
+                    </div>
+                    <div class="info-grid__movie-person">
+                        <div class="info-grid__actors">
+                            <h4>актеры:</h4>
+                            <ul class="list-unstyled">
+                                {% for actor in movie.actors.all %}
+                                <li><a href="">{{actor.name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="info-grid__directors">
+                            <h4>режисеры:</h4>
+                            <ul class="list-unstyled">
+                                {% for director in movie.directors.all %}
+                                <li><a href="">{{director.name}}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <iframe width="640" height="384" src="https://video.sibnet.ru/shell.php?videoid={{movie.player_id}}" frameborder="0" scrolling="no" allowfullscreen></iframe>
+    {% comment %} {% if movie.video_file != null %}
+    <video src="{{movie.video_file.url}}" controls width="640"></video>
+    {% endif %} {% endcomment %}
+    <div class="">
+        <form action="{% url 'add_movie_review' %}" method="post">
+            {% csrf_token %}
+            <textarea name="review_text" id="" type="text" placeholder="оставьте отзыв"></textarea>
+            <button type="submit">отправить</button>
+            <input type="hidden" value="{{movie.id}}" name="movie_id">
+        </form>
+    </div>
+
+    {% for review in movie.reviews.all %}
+    <div class="border border-secondary mb-2 mt-4"></div>
+        <h6>{{review.author}}</h6>
+        <p>{{review.text}}</p>
+        <span>{{review.created_at}}</span>
+        
+    {% endfor %}
+</div>
+
+
+{% endblock %}

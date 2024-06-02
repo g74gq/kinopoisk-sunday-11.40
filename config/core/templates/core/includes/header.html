@@ -1,0 +1,82 @@
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+          <a class="navbar-brand" href="#">g74gq</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">главная</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'movies_list' %}">фильмы</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'generes_list' %}">жанры</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'actors_list' %}">актёры</a>
+              </li>
+            </ul>
+            <!-- <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> -->
+
+            {% comment %} <p>{{request.user.is_authenticated}}</p> {% endcomment %}
+            <ul class="list-unstyled d-flex gap-1 align-items-centr">
+                {% if request.user.is_authenticated %}
+                    <li><a class="btn btn-outline-warning" href="{% url 'profile' %}">личный кабинет</button></a></li>
+                    <li><a class="btn btn-outline-warning" href="{% url 'signout' %}">выйти</a></li>
+                {% else %}
+                    <li><button class="btn btn-outline-warning" type="button" data-bs-toggle="modal" data-bs-target="#signup"> зарегистрироваться </button></li>
+                    <li><button class="btn btn-outline-warning" type="button" data-bs-toggle="modal" data-bs-target="#signin">войти</button></li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- вход -->
+      <div class="modal fade" id="signin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">войти</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="{% url 'signin' %}" class="d-flex flex-coloumn gap-2" method="post">
+                {% csrf_token %}
+                <input class="form-control" type="text" placeholder="введите логин" name="username">
+                <input class="form-control" type="password" placeholder="введите пароль" name="password">
+                <button class="btn btn-outline-warning" type="submit">подтвердить</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- регистрация -->
+      <div class="modal fade" id="signup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">зарегистрироваться</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form action="{% url 'signup' %}" class="d-flex flex-coloumn gap-2" method="post">
+                {% csrf_token %}
+                <input class="form-control" type="text" placeholder="введите логин" name="username">
+                <input class="form-control" type="password" placeholder="введите пароль" name="password">
+                <input class="form-control" type="password" placeholder="повторите пароль" name="repeat_password">
+                <input class="form-control" type="email" placeholder="введите почту" name="email">
+                <button class="btn btn-outline-warning" type="submit">подтвердить</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+</header>

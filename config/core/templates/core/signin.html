@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}home{% endblock %}
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+{% block content %}
+
+
+<form class="d-flex flex-coloumn gap-2" method="post">
+    {% csrf_token %}
+    <input class="form-control" type="text" placeholder="введите логин" name="username">
+    <input class="form-control" type="password" placeholder="введите пароль" name="password">
+    <button class="btn btn-outline-warning" type="submit">подтвердить</button>
+  </form>
+
+  {% endblock %}

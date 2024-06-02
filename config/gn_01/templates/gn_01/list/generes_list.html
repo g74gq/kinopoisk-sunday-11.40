@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+
+{% block title %}{title}{% endblock %}
+
+{% block content %}
+<h1 class="text-center mb-3">{{title}}</h1>
+<div class="container d-flex flex-wrap mw-700px mx-auto gap-2">
+    
+        {% for genere in generes %}
+        <a href=""
+        class="px-3 py-2 fs-5 text-decoration-none bg-black rounded-3 text-light disaible-tap-select hover-scale-4">
+            {{genere.name|title}}
+        </a>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+
+{% block title %}home{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-start gap-4 flex-wrap container">
+    {% for movie in movies%}
+        <div class="card mt-3" style="width: 18rem;">
+            <img src="{{movie.poster.url}}" class="card-img-top" alt="...">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div class="">
+              <h5 class="card-title">{{movie.title}}</h5>
+              <p class="card-text">рейтинг:<span class="text-warning">{{movie.rating}}</span></p>
+              <ul class="list-unstyled d-flex align-items-center gap-1 flex-wrap">
+                {% for genre in movie.genres.all %}
+                <li><a class="text-decoration-none text-light" href="">{{genre.name}} {% if not forloop.last %}, {% endif %}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="">
+              <a href="{% url 'movie_detail' movie_id=movie.id %}" class="btn btn-outline-warning d-block mx-auto">подробнее</a>
+              <p>{{movie.release_date}}</p>
+            </div>
+            </div>
+          </div>
+        
+    {% endfor %}
+    </div>
+{% endblock %}
